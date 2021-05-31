@@ -18,6 +18,10 @@ func main() {
 		return
 	}
 	hash, err := jsonhash.CalculateJsonHash(jsonContent, []string{})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return
+	}
 	fmt.Println(hex.EncodeToString(hash[:]))
 }
 ```
@@ -80,10 +84,9 @@ excluding second parameter whith ignoring fields list. This list will be taken
 from `calc`. Example:
 
 ```go
-hasher := jsonhash.NewHashCalculator([]string{".ignoreme", ".ignoreme_root.ignore"})
+calc := jsonhash.NewHashCalculator([]string{".ignoreme", ".ignoreme_root.ignore"})
 
-hash, err := hashers.CalculateJsonHash([]byte(`{"json":content", "ignoreme":"anything"}`))
+hash, err := calc.CalculateJsonHash([]byte(`{"json":content", "ignoreme":"anything"}`))
 
-hash2, err := hashers.CalculateJsonHash([]byte(`{"ignoreme_root":{"ignore": "anything"}`))
-
+hash2, err := calc.CalculateJsonHash([]byte(`{"ignoreme_root":{"ignore": "anything"}`))
 ```
