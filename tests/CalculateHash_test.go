@@ -1,4 +1,4 @@
-package tests
+package hash_tests
 
 import (
 	"encoding/hex"
